@@ -12,11 +12,6 @@ public class Cradle extends Tool{
 
     @Override
     public int useTool(){
-       
-//        if (getDurability() == 0) { \\ako je kolevka vec pokvarena, nista ne radim
-//            System.out.println("KOLEVKA pokvarena - nema zarade!");
-//            return 0;
-//        }
         
         int kvar = 20;
         if (rnd.nextInt(100) < kvar){
