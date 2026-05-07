@@ -13,11 +13,6 @@ public class Sluice extends Tool{
     @Override
     public int useTool(){
         
-//        if (getDurability() == 0) { \\ako je levak vec pokvaren, ne donosi zaradu
-//            System.out.println("LEVAK pokvaren - nema zarade!");
-//            return 0;
-//        }
-        
         int kvar = rnd.nextInt(51); // levak se trosi od 20% do 50%
         if (kvar < 20){
             kvar = 20;
