@@ -10,7 +10,14 @@ public class Zadatak1 {
         System.out.println("*** GAME: GOLD RUSH ***");
         
         GoldRush gd = new GoldRush();
-//        gd.loadGame();
-//        gd.survive();
+        
+        char izbor = Utility.ocitajOdlukuOPotvrdi("da ucitate prethodnu igru?");
+        if (izbor == 'Y'){
+            gd.loadGame();
+        } else{
+            System.out.println("START NEW GAME");
+        }
+        
+        gd.survive();
     }
 }
