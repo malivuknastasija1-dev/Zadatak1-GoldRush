@@ -44,12 +44,7 @@ public class FortyNiner {
     public void setTools(ArrayList<Tool> tools){
         this.tools = tools;
     }
-////koristi atribut tools, svaki pojedinačno, tako što poziva metodu useTool() na 
-////svakom od alata (prepoznajte ovde polimorfizam). Obratite pažnju da svaka metoda useTool() 
-////vraća količinu novca koji je zarađen njegovim korišćenjem, a smanjuje mu kapacitet (durability) 
-////uvek na drugačiji način u zavisnosti od alata o kojem se radi (kod Sita se ne smanjuje, kod Levka 
-////20%-50% svake sedmice, kod Kolevke odmah na 0% sa verovatnoćom 20%). Poziva se na kraju 
-////svake sedmice
+
     public void useTools(){
         if (endurance <= 0){
             System.out.println("IGRAC je umoran - nema prihoda!");
@@ -58,15 +53,14 @@ public class FortyNiner {
             
         int ukupnaSedmicnaZarada = 0;
         for (Tool t : tools){
-            ukupnaSedmicnaZarada += t.useTool();
+            if (t.getDurability() > 0 || t instanceof Pan){
+                ukupnaSedmicnaZarada += t.useTool();
+            }
         }
-            
         this.money += ukupnaSedmicnaZarada;
         System.out.println("Ukupna sedmicna zarada iznosi: " + ukupnaSedmicnaZarada + " $");
     }
 
-////poziva se na kraju svake sedmice, kao rezultat smanjuje 
-////količinu raspoloživog novca koji 49er poseduje
     public void buyFood(){
         
         int hranaCena = rnd.nextInt(51); // cena hrane je izmedju 30 $ i 50 $ sedmicno, koristim random
@@ -81,8 +75,6 @@ public class FortyNiner {
         System.out.println("Trenutno posedujes: " + getMoney() + " $");
     }
 
-////poziva se na kraju svake sedmice, kao rezultat 
-////smanjuje izdržljivost (endurance) 49er-a
     public void loseEndurance(){
         
         int endurancePad = rnd.nextInt(26); // endurance opada 10 % do 25 % sedmicno, koristim random
@@ -94,42 +86,46 @@ public class FortyNiner {
 
         int trenEndurance = getEndurance();
         int noviEndurance = trenEndurance - endurancePad;
-        
-        if (noviEndurance < 0){
-            noviEndurance = 0;
-        }
-        
         setEndurance(noviEndurance);
         
         System.out.println("Trenutna IZDRZLJIVOST je: " + getEndurance() + " %");
     }
     
-//// STA IGRAC RADI NEDELJOM //
+// STA IGRAC RADI NEDELJOM //
 
-//// ponudi izbor 49er-u šta raditi u nedelju u skladu sa opisom iznad: ništa, popraviti Levak ili ići u grad
     public void isItSundayAgain(){
-        System.out.println("NEDELJA - Sta igrac zeli da radi?");
-        System.out.println("\tOpcija broj 1 - Odmarati");
-        System.out.println("\tOpcija broj 2 - Popravljati Levak (cena 100 $)");
-        System.out.println("\tOpcija broj 3 - Otici do grada (cena 50-200 $)");
-	System.out.print("\tOdaberite opciju: ");
         
-        int izbor = Utility.ocitajCeoBroj();
+        int izbor = 0;
+        do{
+            System.out.println("NEDELJA - Sta igrac zeli da radi?");
+            System.out.println("\tOpcija broj 1 - Odmarati");
+            System.out.println("\tOpcija broj 2 - Popravljati Levak (cena 100 $)");
+            System.out.println("\tOpcija broj 3 - Otici do grada (cena 50-200 $)");
+            System.out.print("\tOdaberite opciju: ");
+            
+            izbor = Utility.ocitajCeoBroj();
+            
+            if (izbor < 1 || izbor > 3){
+                System.out.println("Uneli ste pogresnu opciju!");
+            } 
+        }while(izbor < 1 || izbor > 3);
         
-        if(izbor == 2){
-            System.out.println("\tOdabrana opcija 2");
-            fixSluice();
-        } else if(izbor == 3){
-            System.out.println("\tOdabrana opcija 3");
-            goToSaloon();
-        } else{
-            System.out.println("\tOdabrana opcija 1");
-            System.out.println("Igrac se danas odmara!");
+        switch(izbor){
+            case 1:
+                System.out.println("\tOdabrana opcija 1");
+                System.out.println("Igrac se danas odmara!");
+                break;
+            case 2:
+                System.out.println("\tOdabrana opcija 2");
+                fixSluice();
+                break;
+            case 3:
+                System.out.println("\tOdabrana opcija 3");
+                goToSaloon();
+                break;
         }
     }
-//    
-//// kao rezultat smanjuje količinu raspoloživog novca, ali povećava izdržljivost 
-////(endurance) 49er-a. Pozvana je ukoliko igrač prilikom poziva metode itIsSundayAgain() odabere opciju da pođe u grad
+
     private void goToSaloon(){
         
         int saloonCena = rnd.nextInt(50,201);
@@ -147,10 +143,7 @@ public class FortyNiner {
             System.out.println("Igrac trenutno nema dovoljno novca za odlazak u grad!");
         }
     }
-//    
-////kao rezultat povećava kapacitet Levka na 100% ali smanjuje iznos raspoloživog 
-////novca 49er-a za $100. Pozvana je ukoliko igrač prilikom poziva metode itIsSundayAgain() odabere 
-////opciju da nedelju provede opravljajući Levak
+
     private void fixSluice(){
         if (this.money >= 100){
             this.money -= 100;
@@ -167,4 +160,5 @@ public class FortyNiner {
         }   
     }   
 }
+
 
