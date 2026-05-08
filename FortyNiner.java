@@ -63,10 +63,7 @@ public class FortyNiner {
 
     public void buyFood(){
         
-        int hranaCena = rnd.nextInt(51); // cena hrane je izmedju 30 $ i 50 $ sedmicno, koristim random
-        if (hranaCena < 30){
-            hranaCena = 30;
-        }
+        int hranaCena = rnd.nextInt(30,51); // cena hrane je izmedju 30 $ i 50 $ sedmicno, koristim random
         
         System.out.println("HRANA ove nedelje kosta: " + hranaCena + " $");
 
@@ -77,10 +74,7 @@ public class FortyNiner {
 
     public void loseEndurance(){
         
-        int endurancePad = rnd.nextInt(26); // endurance opada 10 % do 25 % sedmicno, koristim random
-        if (endurancePad < 10){
-            endurancePad = 10;
-        }
+        int endurancePad = rnd.nextInt(10,26); // endurance opada 10 % do 25 % sedmicno, koristim random
         
         System.out.println("Igracu je opala IZDRZLJIVOST ove nedelje za: " + endurancePad + " %");
 
