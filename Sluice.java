@@ -13,10 +13,8 @@ public class Sluice extends Tool{
     @Override
     public int useTool(){
         
-        int kvar = rnd.nextInt(51); // levak se trosi od 20% do 50%
-        if (kvar < 20){
-            kvar = 20;
-        }
+        int kvar = rnd.nextInt(20,51); // levak se trosi od 20% do 50%
+        
         int trenDur = getDurability();
         setDurability(trenDur - kvar);
         System.out.println("Trenutni kapacitet LEVKA je: " + getDurability() + "%");
