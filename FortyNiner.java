@@ -67,9 +67,12 @@ public class FortyNiner {
         
         System.out.println("HRANA ove nedelje kosta: " + hranaCena + " $");
 
-        int trenNovac = getMoney();
-        setMoney(trenNovac - hranaCena);
-        System.out.println("Trenutno posedujes: " + getMoney() + " $");
+        this.money -= hranaCena;
+        if(this.money < 0){
+            this.money = 0;
+        }
+
+        System.out.println("Trenutno posedujes: " + this.money + " $");
     }
 
     public void loseEndurance(){
@@ -80,6 +83,9 @@ public class FortyNiner {
 
         int trenEndurance = getEndurance();
         int noviEndurance = trenEndurance - endurancePad;
+        if(noviEndurance < 0){
+            noviEndurance = 0;
+        }
         setEndurance(noviEndurance);
         
         System.out.println("Trenutna IZDRZLJIVOST je: " + getEndurance() + " %");
