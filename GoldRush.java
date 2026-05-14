@@ -33,28 +33,23 @@ public class GoldRush{
         
         for (int i = brojNedelje; i <= 20; i++){
             System.out.println("*** NEDELJA broj " + i + ". ***");
-            fortyNiner.useTools();
+            if (fortyNiner.getEndurance() > 0){
+                fortyNiner.useTools();
+            }else{
+                System.out.println("Igrac umoran - nema prihoda!");
+            }
+          
             fortyNiner.buyFood();
             fortyNiner.loseEndurance();
-            
-            if (fortyNiner.getEndurance() <= 0){
-                System.out.println("Igrac trenutno ima 0% IZDRZLJIVOSTI - GAME OVER!");
-                return;
-            }
-            
-            for(int x = fortyNiner.getTools().size() - 1; x >= 0; x--){
-                Tool t = fortyNiner.getTools().get(x);
-                if (t instanceof Cradle && t.getDurability() == 0){
-                    fortyNiner.getTools().remove(x);
-                    System.out.println("Pokvarena KOLEVKA je izbacena iz liste!");
-                }
-            }
-            
+       
             int pokvareno = 0;
             List<Tool> alati = fortyNiner.getTools();
             for(int a = alati.size() - 1; a >= 0; a--){
                 Tool t = alati.get(a);
                 if(!(t instanceof Pan) && t.getDurability() <= 0){
+                    if(t instanceof Cradle){
+                        System.out.println("Pokvarena KOLEVKA je izbacena iz liste!");
+                    }
                     alati.remove(a);
                     pokvareno++;
                 }
